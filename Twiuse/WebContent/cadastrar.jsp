@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="/action_page.php" method="get">
+	<form action="/Twiuse/CadastrarPessoaServlet" method="post">
 		Nome: <input type="text" name="nome"><br>
 		Usuario: <input type="text" name="usuario"><br> 
 		Senha: <input type="password" name="senha"><br> 

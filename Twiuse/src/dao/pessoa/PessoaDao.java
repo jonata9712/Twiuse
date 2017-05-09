@@ -1,5 +1,6 @@
 package dao.pessoa;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,7 +8,11 @@ import java.sql.SQLException;
 import model.Pessoa;
 
 public class PessoaDao extends dao.AbstractDao implements dao.interfaces.IPessoaDao {
-
+	private Connection conn;
+	public PessoaDao(Connection conn) {
+		// TODO Auto-generated constructor stub
+		this.conn = conn;
+	}
 	@Override
 	public ResultSet buscarPorNome(String nome) {
 		// TODO Auto-generated method stub
