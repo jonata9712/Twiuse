@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 
 import model.Pessoa;
 
@@ -15,23 +18,28 @@ public class PessoaDao extends dao.AbstractDao implements dao.interfaces.IPessoa
 	}
 
 	@Override
-	public ResultSet buscarPorNome(String nome) {
+	public List<Pessoa> buscarPorNome(String nome) {
 		// TODO Auto-generated method stub
+		List<Pessoa> lista = new ArrayList<Pessoa>();
 		PreparedStatement stmt = retornaPreparedStatement("select from Pessoas where nome like ?");
 		ResultSet rs;
-		try {
-			stmt.setString(1, "%"+nome+"%");
-			rs = stmt.executeQuery();
-			rs.close();
-			return rs;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		// TODO Auto-generated method stub
-		
+		Pessoa pessoa;
+			try {
+				stmt.setString(1, "%"+nome+"%");
+				rs = stmt.executeQuery();
+				rs.close();
+				while(rs.next()){
+					pessoa = new Pessoa(rs.getString("usuario"), rs.getString("nome"));
+					lista.add(pessoa);
+				}
+				return lista;
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		return null;
 	}
+
 
 	@Override
 	public boolean incluirPessoa(String nome, String usuario, String senha) throws SQLException {
@@ -88,14 +96,20 @@ public class PessoaDao extends dao.AbstractDao implements dao.interfaces.IPessoa
 	}
 
 	@Override
-	public ResultSet retornaSeguindo(int idSeguidor) {
+	public List<Pessoa> retornaSeguindo(int idSeguidor) {
+		List<Pessoa> lista = new ArrayList<Pessoa>();
 		PreparedStatement stmt = retornaPreparedStatement("select from follows where idSeguidor = ?");
 		ResultSet rs;
 		try {
 			stmt.setInt(1, idSeguidor);
 			rs = stmt.executeQuery();
 			rs.close();
-			return rs;
+			Pessoa pessoa;
+			while(rs.next()){
+				pessoa = new Pessoa(rs.getString("usuario"), rs.getString("nome"));
+				lista.add(pessoa);
+			}
+			return lista;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -106,15 +120,20 @@ public class PessoaDao extends dao.AbstractDao implements dao.interfaces.IPessoa
 	}
 
 	@Override
-	public ResultSet retornaSeguidores(int idPessoa) {
+	public List<Pessoa> retornaSeguidores(int idPessoa) {
 		PreparedStatement stmt = retornaPreparedStatement("select from follows where idPessoa = ?");
 		ResultSet rs;
 		try {
 			stmt.setInt(1, idPessoa);
 			rs = stmt.executeQuery();
 			rs.close();
-			
-			return rs;
+			Pessoa pessoa;
+			List<Pessoa> lista = new ArrayList<Pessoa>();
+			while(rs.next()){
+				pessoa = new Pessoa(rs.getString("usuario"), rs.getString("nome"));
+				lista.add(pessoa);
+			}
+			return lista;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -125,7 +144,7 @@ public class PessoaDao extends dao.AbstractDao implements dao.interfaces.IPessoa
 	}
 
 	@Override
-	public ResultSet retornaPessoaById(int idPessoa) {
+	public List<Pessoa> retornaPessoaById(int idPessoa) {
 		// TODO Auto-generated method stub
 		
 		PreparedStatement stmt = retornaPreparedStatement("Select from Pessoa where idPessoa = ?");
@@ -134,7 +153,13 @@ public class PessoaDao extends dao.AbstractDao implements dao.interfaces.IPessoa
 			stmt.setInt(1, idPessoa);
 			rs = stmt.executeQuery();
 			rs.close();
-			return rs;
+			Pessoa pessoa;
+			List<Pessoa> lista = new ArrayList<Pessoa>();
+			while(rs.next()){
+				pessoa = new Pessoa(rs.getString("usuario"), rs.getString("nome"));
+				lista.add(pessoa);
+			}
+			return lista;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -143,19 +168,46 @@ public class PessoaDao extends dao.AbstractDao implements dao.interfaces.IPessoa
 	}
 
 	@Override
-	public ResultSet loginUsuario(String usuario, String senha) {
+	public List<Pessoa> loginUsuario(String usuario, String senha) {
 		// TODO Auto-generated method stub
 		PreparedStatement stmt = retornaPreparedStatement("select from pessoa where usuario = ? and senha = ?");
 		try {
 			stmt.setString(1, usuario);
 			stmt.setString(2, senha);
 			ResultSet rs = stmt.executeQuery();
-			return rs;
+			Pessoa pessoa;
+			List<Pessoa> lista = new ArrayList<Pessoa>();
+			while(rs.next()){
+				pessoa = new Pessoa(rs.getString("usuario"), rs.getString("nome"));
+				lista.add(pessoa);
+			}
+			return lista;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
+		return null;
+	}
+
+	@Override
+	public List<Pessoa> verificaExisteNomeUsuario(String usuario) {
+		// TODO Auto-generated method stub
+		PreparedStatement stmt = retornaPreparedStatement("select * from pessoa where usuario = ?");
+		try {
+			stmt.setString(1, usuario);
+			ResultSet rs = stmt.executeQuery();
+			Pessoa pessoa;
+			List<Pessoa> lista = new ArrayList<Pessoa>();
+			while(rs.next()){
+				pessoa = new Pessoa(rs.getString("usuario"), rs.getString("nome"));
+				lista.add(pessoa);
+			}
+			return lista;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 

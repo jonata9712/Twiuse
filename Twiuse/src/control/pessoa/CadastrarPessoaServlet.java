@@ -16,22 +16,24 @@ import dao.pessoa.PessoaDao;
 /**
  * Servlet implementation class CadastrarPessoaServlet
  */
-@WebServlet(urlPatterns="/CadastrarPessoaServlet", asyncSupported=true)
+@WebServlet(urlPatterns = "/CadastrarPessoaServlet", asyncSupported = true)
 public class CadastrarPessoaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public CadastrarPessoaServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public CadastrarPessoaServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		PrintWriter out = response.getWriter();
 		out.println("<html>");
@@ -44,18 +46,33 @@ public class CadastrarPessoaServlet extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		PessoaDao dao = new PessoaDao((Connection) request.getAttribute("conexao"));
-		try {
-			dao.incluirPessoa(request.getParameter("nome"), request.getParameter("usuario"), request.getParameter("senha"));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.out.println(e);
-			e.printStackTrace();
+		if (!dao.verificaExisteNomeUsuario(request.getParameter("usuario")).isEmpty()) {
+			PrintWriter out = response.getWriter();
+			out.println("<html>");
+			out.println("<body>");
+			out.println("<h1>");
+			out.println("Este usuário já existe!");
+			out.println("</h1>");
+			out.println("</body>");
+			out.println("</html>");
+		} else {
+			try {
+				dao.incluirPessoa(request.getParameter("nome"), request.getParameter("usuario"),
+						request.getParameter("senha"));
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				System.out.println(e);
+				e.printStackTrace();
+			}
 		}
+
 	}
 
 }

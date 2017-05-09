@@ -1,15 +1,16 @@
 package dao.interfaces;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import model.Pessoa;
 public interface IPessoaDao {
-	public ResultSet buscarPorNome(String nome);
+	public List<Pessoa> buscarPorNome(String nome);
 	public boolean incluirPessoa(String nome, String usuario, String senha) throws SQLException;
 	public boolean alterarPessoa(Pessoa pessoa);
 	public boolean seguirPessoa(int idSeguidor, int idPessoa);
-	public ResultSet retornaPessoaById(int idPessoa);
-	public ResultSet retornaSeguindo(int idPessoa);
-	public ResultSet retornaSeguidores(int idPessoa);
-	public ResultSet loginUsuario(String usuario, String senha);
+	public List<Pessoa> retornaPessoaById(int idPessoa);
+	public List<Pessoa> retornaSeguindo(int idPessoa);
+	public List<Pessoa> retornaSeguidores(int idPessoa);
+	public List<Pessoa> loginUsuario(String usuario, String senha);
+	public List<Pessoa> verificaExisteNomeUsuario(String usuario);
 }
