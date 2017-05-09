@@ -1,5 +1,6 @@
 package dao.twitter;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,6 +8,11 @@ import java.sql.SQLException;
 import model.Twitter;
 
 public class TwitterDao extends dao.AbstractDao implements dao.interfaces.ITwitterDao {
+	
+	public TwitterDao(Connection conn) {
+		super(conn);
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public boolean twittar(String mensagem, int idPessoa) {

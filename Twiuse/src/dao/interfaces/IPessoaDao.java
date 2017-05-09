@@ -11,4 +11,5 @@ public interface IPessoaDao {
 	public ResultSet retornaPessoaById(int idPessoa);
 	public ResultSet retornaSeguindo(int idPessoa);
 	public ResultSet retornaSeguidores(int idPessoa);
+	public ResultSet loginUsuario(String usuario, String senha);
 }

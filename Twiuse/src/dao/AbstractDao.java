@@ -4,16 +4,18 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import connection.ConnectionFactory;
-
 public class AbstractDao {
+
+	protected Connection conn;
+	public AbstractDao(Connection conn){
+		this.conn = conn;
+	}
 
 	public PreparedStatement retornaPreparedStatement(String sql){
 		/**Este método cria uma conexão e retorna PreparedStatement a partir de uma entrada String contendo os comandos SQL.
 		 * @author Matheus Barbosa
 		 * 
 		 */
-		Connection conn = new ConnectionFactory().getConnection();
 		PreparedStatement stmt;
 		try {
 			stmt = conn.prepareStatement(sql);

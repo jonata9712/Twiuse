@@ -8,11 +8,12 @@ import java.sql.SQLException;
 import model.Pessoa;
 
 public class PessoaDao extends dao.AbstractDao implements dao.interfaces.IPessoaDao {
-	private Connection conn;
+	
 	public PessoaDao(Connection conn) {
+		super(conn);
 		// TODO Auto-generated constructor stub
-		this.conn = conn;
 	}
+
 	@Override
 	public ResultSet buscarPorNome(String nome) {
 		// TODO Auto-generated method stub
@@ -140,5 +141,24 @@ public class PessoaDao extends dao.AbstractDao implements dao.interfaces.IPessoa
 		}
 		return null;
 	}
+
+	@Override
+	public ResultSet loginUsuario(String usuario, String senha) {
+		// TODO Auto-generated method stub
+		PreparedStatement stmt = retornaPreparedStatement("select from pessoa where usuario = ? and senha = ?");
+		try {
+			stmt.setString(1, usuario);
+			stmt.setString(2, senha);
+			ResultSet rs = stmt.executeQuery();
+			return rs;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+
+	
 
 }

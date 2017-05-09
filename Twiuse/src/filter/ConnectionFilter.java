@@ -1,4 +1,4 @@
-package filter.pessoa;
+package filter;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -14,7 +14,7 @@ import connection.ConnectionFactory;
 /**
  * Servlet Filter implementation class ConnectionFilter
  */
-@WebFilter("/ConnectionFilter")
+@WebFilter("/*")
 public class ConnectionFilter implements Filter {
 
     /**
@@ -46,6 +46,7 @@ public class ConnectionFilter implements Filter {
 			conn.close();
 		} catch (Exception e) {
 			// TODO: handle exception
+			System.out.println(e);
 		}
 		
 	}

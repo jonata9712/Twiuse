@@ -53,6 +53,7 @@ public class CadastrarPessoaServlet extends HttpServlet {
 			dao.incluirPessoa(request.getParameter("nome"), request.getParameter("usuario"), request.getParameter("senha"));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			System.out.println(e);
 			e.printStackTrace();
 		}
 	}
