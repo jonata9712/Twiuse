@@ -1,4 +1,4 @@
-package dao.Pessoa;
+package dao.pessoa;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

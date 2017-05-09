@@ -1,4 +1,4 @@
-package dao.Twitter;
+package dao.twitter;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
