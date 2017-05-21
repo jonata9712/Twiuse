@@ -170,7 +170,7 @@ public class PessoaDao extends dao.AbstractDao implements dao.interfaces.IPessoa
 	@Override
 	public List<Pessoa> loginUsuario(String usuario, String senha) {
 		// TODO Auto-generated method stub
-		PreparedStatement stmt = retornaPreparedStatement("select from pessoa where usuario = ? and senha = ?");
+		PreparedStatement stmt = retornaPreparedStatement("select * from pessoa where usuario = ? and senha = ?");
 		try {
 			stmt.setString(1, usuario);
 			stmt.setString(2, senha);
@@ -179,6 +179,8 @@ public class PessoaDao extends dao.AbstractDao implements dao.interfaces.IPessoa
 			List<Pessoa> lista = new ArrayList<Pessoa>();
 			while(rs.next()){
 				pessoa = new Pessoa(rs.getString("usuario"), rs.getString("nome"));
+				pessoa.setSenha(rs.getString("senha"));
+				pessoa.setId(rs.getInt("id"));
 				lista.add(pessoa);
 			}
 			return lista;
