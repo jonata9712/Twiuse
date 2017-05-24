@@ -9,5 +9,6 @@
 <body>
 	$nome
 	$user
+	
 </body>
 </html>
