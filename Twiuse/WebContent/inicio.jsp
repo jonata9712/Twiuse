@@ -24,6 +24,7 @@
 			</button>
 		</div>
 		<div class="container-fluid">
+			<!-- superior -->
 			<!-- Brand and toggle get grouped for better mobile display -->
 
 
@@ -36,7 +37,7 @@
 							class="sr-only">(current)</span></a></li>
 
 					<c:if test="${usuario == null}">
-						<li><a href="#">Cadastre-se</a></li>
+						<li><a href="/Twiuse/cadastrar.jsp">Cadastre-se</a></li>
 					</c:if>
 					<c:if test="${usuario != null}">
 						<li><a href="/Twiuse/SairServlet">Sair</a></li>
@@ -62,34 +63,77 @@
 			<!-- /.navbar-collapse -->
 		</div>
 		<!-- /.container-fluid -->
-		</nav>
-		</header>
+
 		<div class="row">
 			<div role="main" class="col-md-6 col-md-push-3">
+				<!-- meio -->
 				<c:if test="${usuario != null}">
 					<div class="panel panel-default">
-						<form action="/Twiuse/Twittar"  method="post">
+						<form action="/Twiuse/Twittar" method="post">
 							<div class="form-group">
 								<label for="comment">Escrever:</label>
-								<textarea class="form-control" rows="5" id="comment" name="mensagem"></textarea>
+								<textarea class="form-control" rows="5" id="comment"
+									name="mensagem"></textarea>
 							</div>
 							<button type="submit" class="btn btn-default">Twittar</button>
 						</form>
 					</div>
 
 				</c:if>
-				<c:forEach var="twitter" items="${listatwt}">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h3 class="panel-title">${twitter.pessoa.nome} Disse:</h3>
-						</div>
-						<div class="panel-body">${twitter.mensagem}</div>
-					</div>
-				</c:forEach>
+				<c:choose>
+					<c:when test="${listatwt == null}">
+						<h1>Poxa, você ainda não segue ninguém :/</h1>
+						<h3>
+							Aproveita e dá uma olhadinha aqui do lado <span
+								class="glyphicon glyphicon-hand-right" aria-hidden="true"></span>
+						</h3>
+					</c:when>
+					<c:otherwise>
+						<c:forEach var="twitter" items="${listatwt}">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h3 class="panel-title">${twitter.pessoa.nome}Disse:</h3>
+								</div>
+								<div class="panel-body">${twitter.mensagem}</div>
+							</div>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
+
 
 			</div>
-			<aside role="complementary" class="col-md-3 col-md-push-3"> </aside>
-			<nav class="col-md-3 col-md-pull-9"> </nav>
+			<aside role="complementary" class="col-md-3 col-md-push-3"> <!-- Lado Direito -->
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<table>
+						<c:forEach var="pessoa" items="${listaTodasPessoas}" begin="1"
+							end="9" step="1">
+							<tr>
+								<td>
+									<form class="navbar-form navbar-left"
+										action="/Twiuse/SeguirServlet" method="post">
+										<div class="form-group"></div>
+										<a href="">${pessoa.nome}</a> <input type="hidden"
+											name="idPessoa" value="${pessoa.id}">
+										<button type="submit" class="btn btn-default">Seguir</button>
+									</form>
+
+								</td>
+							</tr>
+						</c:forEach>
+					</table>
+				</div>
+			</div>
+			</aside>
+			<nav class="col-md-3 col-md-pull-9"> <!-- Lado esquerdo --> <c:if
+				test="${usuario != null}">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Sobre você</h3>
+					</div>
+					<div class="panel-body">${usuario.nome}</div>
+				</div>
+			</c:if> </nav>
 		</div>
 		<footer class="row"> </footer>
 	</div>

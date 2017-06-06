@@ -13,4 +13,5 @@ public interface IPessoaDao {
 	public List<Pessoa> retornaSeguidores(int idPessoa);
 	public Pessoa loginUsuario(String usuario, String senha);
 	public List<Pessoa> verificaExisteNomeUsuario(String usuario);
-}
+	public List<Pessoa> listarTodasQuemSeguir(int idPessoa);
+ }

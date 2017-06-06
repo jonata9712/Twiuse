@@ -11,15 +11,16 @@ import dao.pessoa.PessoaDao;
 import model.Twitter;
 
 public class TwitterDao extends dao.AbstractDao implements dao.interfaces.ITwitterDao {
-	
+
 	public TwitterDao(Connection conn) {
 		super(conn);
 		// TODO Auto-generated constructor stub
 	}
-	public TwitterDao(){
-		
+
+	public TwitterDao() {
+
 	}
-	
+
 	@Override
 	public boolean twittar(String mensagem, int idPessoa) {
 		// TODO Auto-generated method stub
@@ -80,8 +81,9 @@ public class TwitterDao extends dao.AbstractDao implements dao.interfaces.ITwitt
 			stmt.setInt(1, idPessoa);
 			rs = stmt.executeQuery();
 			rs.close();
-			while(rs.next()){
-				Twitter tw = new Twitter(rs.getInt("idPessoa"), rs.getString("mensagem"), rs.getDate("dataTwitter"), rs.getInt("idTwitter"));
+			while (rs.next()) {
+				Twitter tw = new Twitter(rs.getInt("idPessoa"), rs.getString("mensagem"), rs.getDate("dataTwitter"),
+						rs.getInt("idTwitter"));
 				lista.add(tw);
 			}
 			return lista;
@@ -96,17 +98,26 @@ public class TwitterDao extends dao.AbstractDao implements dao.interfaces.ITwitt
 	public List listarTwitterSeguindo(int idPessoa) {
 		// TODO Auto-generated method stub
 		ResultSet rs;
-		PreparedStatement stmt = retornaPreparedStatement("select twitter.idTwitter, twitter.mensagem, twitter.idPessoa, twitter.dataTwitter from twitter, follows where follows.idSeguidor = ? and twitter.idPessoa = follows.idPessoa order by twitter.dataTwitter asc");
+		PreparedStatement stmt = retornaPreparedStatement(
+				"select twitter.idTwitter, twitter.mensagem, twitter.idPessoa, twitter.dataTwitter from twitter, follows where follows.idSeguidor = ? and twitter.idPessoa = follows.idPessoa order by twitter.dataTwitter asc");
 		try {
 			List<Twitter> lista = new ArrayList<Twitter>();
 			stmt.setInt(1, idPessoa);
 			rs = stmt.executeQuery();
-			rs.close();
-			while(rs.next()){
-				Twitter tw = new Twitter(rs.getInt("idPessoa"), rs.getString("mensagem"), rs.getDate("dataTwitter"), rs.getInt("idTwitter"));
+			PessoaDao pdao = new PessoaDao(super.conn);
+			while (rs.next()) {
+				Twitter tw = new Twitter(rs.getInt("idPessoa"), rs.getString("mensagem"), rs.getDate("dataTwitter"),
+						rs.getInt("idTwitter"));
+				tw.setPessoa(pdao.retornaPessoaById(tw.getIdPessoa()));
 				lista.add(tw);
 			}
-			return lista;
+			rs.close();
+			if (lista.isEmpty()) {
+				return null;
+			} else {
+				return lista;
+			}
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -117,26 +128,27 @@ public class TwitterDao extends dao.AbstractDao implements dao.interfaces.ITwitt
 	@Override
 	public List listarTudo() {
 		// TODO Auto-generated method stub
-				ResultSet rs;
-				PreparedStatement stmt = retornaPreparedStatement("SELECT * FROM `twitter` ORDER BY `twitter`.`dataTwitter` DESC");
-				PessoaDao pdao = new PessoaDao(super.conn);
-				try {
-					List<Twitter> lista = new ArrayList<Twitter>();
-					rs = stmt.executeQuery();
-					while(rs.next()){
-						Twitter tw = new Twitter(rs.getInt("idPessoa"), rs.getString("mensagem"), rs.getDate("dataTwitter"), rs.getInt("idTwitter"));
-						tw.setPessoa(pdao.retornaPessoaById(tw.getIdPessoa()));
-						lista.add(tw);
-					}
-					rs.close();
-					
-					return lista;
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				return null;
+		ResultSet rs;
+		PreparedStatement stmt = retornaPreparedStatement(
+				"SELECT * FROM `twitter` ORDER BY `twitter`.`dataTwitter` DESC");
+		PessoaDao pdao = new PessoaDao(super.conn);
+		try {
+			List<Twitter> lista = new ArrayList<Twitter>();
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				Twitter tw = new Twitter(rs.getInt("idPessoa"), rs.getString("mensagem"), rs.getDate("dataTwitter"),
+						rs.getInt("idTwitter"));
+				tw.setPessoa(pdao.retornaPessoaById(tw.getIdPessoa()));
+				lista.add(tw);
+			}
+			rs.close();
+
+			return lista;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
-	
 
 }
