@@ -67,38 +67,14 @@
 		<div class="row">
 			<div role="main" class="col-md-6 col-md-push-3">
 				<!-- meio -->
-				<c:if test="${usuario != null}">
+				<c:forEach var="twitter" items="${listatwt}">
 					<div class="panel panel-default">
-						<form action="/Twiuse/Twittar" method="post">
-							<div class="form-group">
-								<label for="comment">Escrever:</label>
-								<textarea class="form-control" rows="5" id="comment"
-									name="mensagem"></textarea>
-							</div>
-							<button type="submit" class="btn btn-default">Twittar</button>
-						</form>
+						<div class="panel-heading">
+							<h3 class="panel-title">${twitter.pessoa.nome}Disse:</h3>
+						</div>
+						<div class="panel-body">${twitter.mensagem}</div>
 					</div>
-
-				</c:if>
-				<c:choose>
-					<c:when test="${listatwt == null}">
-						<h1>Poxa, você ainda não segue ninguém :/</h1>
-						<h3>
-							Aproveita e dá uma olhadinha aqui do lado <span
-								class="glyphicon glyphicon-hand-right" aria-hidden="true"></span>
-						</h3>
-					</c:when>
-					<c:otherwise>
-						<c:forEach var="twitter" items="${listatwt}">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h3 class="panel-title">${twitter.pessoa.nome}Disse:</h3>
-								</div>
-								<div class="panel-body">${twitter.mensagem}</div>
-							</div>
-						</c:forEach>
-					</c:otherwise>
-				</c:choose>
+				</c:forEach>
 
 
 			</div>
@@ -110,10 +86,10 @@
 							end="9" step="1">
 							<tr>
 								<td>
-									<form class="navbar-form"
+									<form class="navbar-form navbar-left"
 										action="/Twiuse/SeguirServlet" method="post">
 										<div class="form-group"></div>
-										<a href="/Twiuse/VisitarServlet?pessoa=${pessoa.usuario}">${pessoa.nome}</a> 
+										<a href="/Twiuse/VisitarServlet?pessoa=${pessoa.usuario}">${pessoa.nome}</a>
 										<input type="hidden" name="idPessoa" value="${pessoa.id}">
 										<button type="submit" class="btn btn-default">Seguir</button>
 									</form>
@@ -126,12 +102,21 @@
 			</div>
 			</aside>
 			<nav class="col-md-3 col-md-pull-9"> <!-- Lado esquerdo --> <c:if
-				test="${usuario != null}">
+				test="${pessoa != null}">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h3 class="panel-title">Sobre você</h3>
+						<h3 class="panel-title">Sobre quem</h3>
 					</div>
-					<div class="panel-body">${usuario.nome}</div>
+					<div class="panel-body">${pessoa.nome}
+						<c:if test="${botaoDeixarSeguir}">
+						<span><form class="navbar-form"
+								action="/Twiuse/DeixarSeguirServlet" method="post">
+
+								<button type="submit" class="btn btn-default">Deixar de Seguir</button>
+							</form></span>
+							
+						</c:if>
+					</div>
 				</div>
 			</c:if> </nav>
 		</div>

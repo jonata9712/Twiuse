@@ -74,18 +74,18 @@ public class TwitterDao extends dao.AbstractDao implements dao.interfaces.ITwitt
 	@Override
 	public List listarTwitterPessoa(int idPessoa) {
 		// TODO Auto-generated method stub
-		PreparedStatement stmt = retornaPreparedStatement("select from twitter where idPessoa = ?");
+		PreparedStatement stmt = retornaPreparedStatement("select * from twitter where idPessoa = ?");
 		ResultSet rs;
 		try {
 			List<Twitter> lista = new ArrayList<Twitter>();
 			stmt.setInt(1, idPessoa);
 			rs = stmt.executeQuery();
-			rs.close();
 			while (rs.next()) {
 				Twitter tw = new Twitter(rs.getInt("idPessoa"), rs.getString("mensagem"), rs.getDate("dataTwitter"),
 						rs.getInt("idTwitter"));
 				lista.add(tw);
 			}
+			rs.close();
 			return lista;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

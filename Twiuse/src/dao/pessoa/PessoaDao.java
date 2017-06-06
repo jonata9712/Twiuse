@@ -232,6 +232,43 @@ public class PessoaDao extends dao.AbstractDao implements dao.interfaces.IPessoa
 		}
 		return null;
 	}
+	@Override
+	public Pessoa retornaPessoaByUsuario(String usuario) {
+		PreparedStatement stmt = retornaPreparedStatement("Select * from Pessoa where usuario = ?");
+		ResultSet rs;
+		try {
+			stmt.setString(1, usuario);
+			rs = stmt.executeQuery();
+			rs.next();
+			Pessoa pessoa = new Pessoa(rs.getString("usuario"), rs.getString("nome"));
+			pessoa.setId(rs.getInt("id"));
+			rs.close();
+			return pessoa;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	@Override
+	public boolean verificaSeguindo(int idPessoa, int idSeguidor) {
+		// TODO Auto-generated method stub
+		PreparedStatement stmt = retornaPreparedStatement("select * from follows where idPessoa = ? and idSeguidor = ?");
+		try {
+			stmt.setInt(1, idPessoa);
+			stmt.setInt(2, idSeguidor);
+			ResultSet rs = stmt.executeQuery();
+			if(rs.next()){
+				rs.close();
+				return true;
+			}
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
 
 	
 
