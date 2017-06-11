@@ -54,8 +54,10 @@ public class SeguirServlet extends HttpServlet {
 		PessoaDao pdao = new PessoaDao((Connection) request.getAttribute("conexao"));
 		HttpSession session = request.getSession();
 		Pessoa p = (Pessoa)session.getAttribute("usuario");
+		Pessoa p2 = pdao.retornaPessoaById(Integer.parseInt(request.getParameter("idPessoa")));
 		pdao.seguirPessoa(Integer.parseInt(request.getParameter("idPessoa")), p.getId());
-		RequestDispatcher rd = request.getRequestDispatcher("/inicio");
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/VisitarServlet?pessoa="+p2.getUsuario());
 		rd.forward(request, response);
 	}
 

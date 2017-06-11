@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Twiuse</title>
 <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="js/bootstrap.min.js"></script>
@@ -67,14 +67,22 @@
 		<div class="row">
 			<div role="main" class="col-md-6 col-md-push-3">
 				<!-- meio -->
-				<c:forEach var="twitter" items="${listatwt}">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h3 class="panel-title">${twitter.pessoa.nome}Disse:</h3>
-						</div>
-						<div class="panel-body">${twitter.mensagem}</div>
-					</div>
-				</c:forEach>
+				
+				<c:choose>
+					<c:when test="${listatwt == null}">
+						<h1>${pessoa.nome} Ainda não publicou nada :/</h1>
+					</c:when>
+					<c:otherwise>
+						<c:forEach var="twitter" items="${listatwt}">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h3 class="panel-title">${twitter.pessoa.nome}Disse:</h3>
+								</div>
+								<div class="panel-body">${twitter.mensagem}</div>
+							</div>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
 
 
 			</div>
@@ -89,8 +97,8 @@
 									<form class="navbar-form navbar-left"
 										action="/Twiuse/SeguirServlet" method="post">
 										<div class="form-group"></div>
-										<a href="/Twiuse/VisitarServlet?pessoa=${pessoa.usuario}">${pessoa.nome}</a>
 										<input type="hidden" name="idPessoa" value="${pessoa.id}">
+										<a href="/Twiuse/VisitarServlet?pessoa=${pessoa.usuario}">${pessoa.nome}</a>
 										<button type="submit" class="btn btn-default">Seguir</button>
 									</form>
 
@@ -111,7 +119,7 @@
 						<c:if test="${botaoDeixarSeguir}">
 						<span><form class="navbar-form"
 								action="/Twiuse/DeixarSeguirServlet" method="post">
-
+								<input type="hidden" name="idPessoa" value="${pessoa.id}">
 								<button type="submit" class="btn btn-default">Deixar de Seguir</button>
 							</form></span>
 							

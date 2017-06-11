@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Twiuse</title>
 <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="js/bootstrap.min.js"></script>
@@ -113,8 +113,8 @@
 									<form class="navbar-form"
 										action="/Twiuse/SeguirServlet" method="post">
 										<div class="form-group"></div>
-										<a href="/Twiuse/VisitarServlet?pessoa=${pessoa.usuario}">${pessoa.nome}</a> 
 										<input type="hidden" name="idPessoa" value="${pessoa.id}">
+										<a href="/Twiuse/VisitarServlet?pessoa=${pessoa.usuario}">${pessoa.nome}</a>
 										<button type="submit" class="btn btn-default">Seguir</button>
 									</form>
 

@@ -239,9 +239,11 @@ public class PessoaDao extends dao.AbstractDao implements dao.interfaces.IPessoa
 		try {
 			stmt.setString(1, usuario);
 			rs = stmt.executeQuery();
-			rs.next();
-			Pessoa pessoa = new Pessoa(rs.getString("usuario"), rs.getString("nome"));
+			Pessoa pessoa = null;
+			if(rs.next()){
+			pessoa = new Pessoa(rs.getString("usuario"), rs.getString("nome"));
 			pessoa.setId(rs.getInt("id"));
+			}
 			rs.close();
 			return pessoa;
 		} catch (SQLException e) {
@@ -263,6 +265,22 @@ public class PessoaDao extends dao.AbstractDao implements dao.interfaces.IPessoa
 				return true;
 			}
 			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+	@Override
+	public boolean deixarDeSeguir(int idPessoa, int idSeguidor) {
+		// TODO Auto-generated method stub
+		PreparedStatement stmt = retornaPreparedStatement("delete from follows where idPessoa = ? and idSeguidor = ?");
+		try {
+			stmt.setInt(1, idPessoa);
+			stmt.setInt(2, idSeguidor);
+			stmt.execute();
+			stmt.close();
+			return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

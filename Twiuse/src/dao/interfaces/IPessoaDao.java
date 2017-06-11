@@ -16,4 +16,5 @@ public interface IPessoaDao {
 	public List<Pessoa> verificaExisteNomeUsuario(String usuario);
 	public List<Pessoa> listarTodasQuemSeguir(int idPessoa);
 	public boolean verificaSeguindo(int idPessoa, int idSeguidor);
+	public boolean deixarDeSeguir(int idPessoa, int idSeguidor);
  }
