@@ -53,12 +53,23 @@ public class SeguirServlet extends HttpServlet {
 		System.out.println("Seguindo: " + request.getParameter("idPessoa"));
 		PessoaDao pdao = new PessoaDao((Connection) request.getAttribute("conexao"));
 		HttpSession session = request.getSession();
+		int idPessoa = Integer.parseInt(request.getParameter("idPessoa"));
 		Pessoa p = (Pessoa)session.getAttribute("usuario");
 		Pessoa p2 = pdao.retornaPessoaById(Integer.parseInt(request.getParameter("idPessoa")));
-		pdao.seguirPessoa(Integer.parseInt(request.getParameter("idPessoa")), p.getId());
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/VisitarServlet?pessoa="+p2.getUsuario());
-		rd.forward(request, response);
+		if(pdao.verificaSeguindo(idPessoa, p.getId())){
+			PrintWriter out = response.getWriter();
+			out.println("<html>");
+			out.println("<body>");
+			out.println("<h1>");
+			out.println("Você ja segue essa pessoa!");
+			out.println("</h1>");
+			out.println("</body>");
+			out.println("</html>");
+		}else{
+			pdao.seguirPessoa(idPessoa, p.getId());
+			RequestDispatcher rd = request.getRequestDispatcher("/VisitarServlet?pessoa="+p2.getUsuario());
+			rd.forward(request, response);
+		}
 	}
 
 }

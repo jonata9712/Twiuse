@@ -2,6 +2,7 @@ package control.twitter;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,8 +10,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import dao.pessoa.PessoaDao;
 import dao.twitter.TwitterDao;
+import model.Pessoa;
 
 /**
  * Servlet implementation class ListarTodosServlet
@@ -32,9 +36,18 @@ public class ListarTodosServlet extends HttpServlet {
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
 		TwitterDao tdao = new TwitterDao((Connection) request.getAttribute("conexao"));
-		request.getSession().setAttribute("listatwt", tdao.listarTudo());
-		RequestDispatcher rd = request.getRequestDispatcher("/NewFile.jsp");
+		PessoaDao pdao = new PessoaDao((Connection) request.getAttribute("conexao"));
+		Pessoa p = (Pessoa) session.getAttribute("usuario");
+		if(p == null){
+			session.setAttribute("listatwt", tdao.listarTudo());
+		}else{
+			List<Pessoa> todasPessoas = pdao.listarTodasQuemSeguir(p.getId());
+			session.setAttribute("listaTodasPessoas", todasPessoas);
+			session.setAttribute("listatwt", tdao.listarTwitterSeguindo(p.getId()));
+		}
+		RequestDispatcher rd = request.getRequestDispatcher("/inicio.jsp");
 		rd.forward(request, response);
 	}
 

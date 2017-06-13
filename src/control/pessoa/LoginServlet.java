@@ -65,14 +65,8 @@ public class LoginServlet extends HttpServlet {
 					rd.forward(request, response);
 
 				} else if (session.getAttribute("usuario") != null) {
-					PrintWriter out = response.getWriter();
-					out.println("<html>");
-					out.println("<body>");
-					out.println("<h1>");
-					out.println("Já existe um usuário logado, saia antes de iniciar uma nova sessão");
-					out.println("</h1>");
-					out.println("</body>");
-					out.println("</html>");
+					RequestDispatcher rd = request.getRequestDispatcher("/inicio");
+					rd.forward(request, response);
 				} else {
 					PrintWriter out = response.getWriter();
 					out.println("<html>");

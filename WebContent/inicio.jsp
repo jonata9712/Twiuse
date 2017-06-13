@@ -92,7 +92,7 @@
 						<c:forEach var="twitter" items="${listatwt}">
 							<div class="panel panel-default">
 								<div class="panel-heading">
-									<h3 class="panel-title">${twitter.pessoa.nome}Disse:</h3>
+									<h3 class="panel-title">${twitter.pessoa.nome} disse:</h3>
 								</div>
 								<div class="panel-body">${twitter.mensagem}</div>
 							</div>

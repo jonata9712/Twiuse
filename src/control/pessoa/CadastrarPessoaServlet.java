@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -52,8 +53,12 @@ public class CadastrarPessoaServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String nome = request.getParameter("nome");
+		String usuario = request.getParameter("usuario");				
+		String senha = request.getParameter("senha");
+		
 		PessoaDao dao = new PessoaDao((Connection) request.getAttribute("conexao"));
-		if (!dao.verificaExisteNomeUsuario(request.getParameter("usuario")).isEmpty()) {
+		if (!dao.verificaExisteNomeUsuario(usuario).isEmpty()) {
 			PrintWriter out = response.getWriter();
 			out.println("<html>");
 			out.println("<body>");
@@ -64,8 +69,10 @@ public class CadastrarPessoaServlet extends HttpServlet {
 			out.println("</html>");
 		} else {
 			try {
-				dao.incluirPessoa(request.getParameter("nome"), request.getParameter("usuario"),
-						request.getParameter("senha"));
+				dao.incluirPessoa(nome, usuario,
+						senha);
+				RequestDispatcher rd = request.getRequestDispatcher("/LoginServlet?usuario="+usuario+"&senha="+senha);
+				rd.forward(request, response);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				System.out.println(e);
