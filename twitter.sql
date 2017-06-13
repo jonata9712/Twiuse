@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 24-Maio-2017 às 22:29
+-- Generation Time: 13-Jun-2017 às 05:03
 -- Versão do servidor: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
@@ -32,14 +32,6 @@ CREATE TABLE `follows` (
   `idRelacionamento` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Extraindo dados da tabela `follows`
---
-
-INSERT INTO `follows` (`idPessoa`, `idSeguidor`, `idRelacionamento`) VALUES
-(1, 2, 1),
-(2, 1, 2);
-
 -- --------------------------------------------------------
 
 --
@@ -53,29 +45,6 @@ CREATE TABLE `pessoa` (
   `nome` char(60) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Extraindo dados da tabela `pessoa`
---
-
-INSERT INTO `pessoa` (`id`, `senha`, `usuario`, `nome`) VALUES
-(1, '6456456456', 'matheus', 'matheus'),
-(2, '654564', 'fulano', 'fulano'),
-(3, 'fsadfasd', 'dsfdsdfasd', 'asdsafdasd'),
-(4, '74567', 'rt675756', '567456'),
-(5, 'cu', 'cu', 'cu'),
-(6, 'yy', 'yyy', 'yyy'),
-(7, '654564', 'ww', 'www'),
-(8, '99', '9', '999999999999'),
-(9, 'sss', 'ss', 'sss'),
-(10, 'hhh', 'hh', 'hhh'),
-(11, 'dd', 'dd', 'ddd'),
-(12, 'tyertyer', 'erty', 'yert'),
-(13, 'xxx', 'xxx', 'xxxxx'),
-(14, 'bbbbb', 'bbbb', 'bbbbb'),
-(15, 'hhhhhh', 'hghhhhh', 'hhhhhhhhhhhh'),
-(16, 'ccccccccccc', 'ccccccccccc', 'ccccccccccc'),
-(17, '777', '777', '777');
-
 -- --------------------------------------------------------
 
 --
@@ -88,15 +57,6 @@ CREATE TABLE `twitter` (
   `idPessoa` int(11) NOT NULL,
   `dataTwitter` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `twitter`
---
-
-INSERT INTO `twitter` (`idTwitter`, `mensagem`, `idPessoa`, `dataTwitter`) VALUES
-(1, 'olá, bem vindo ao meu twitter ^^', 1, '2017-05-06 21:12:09'),
-(2, 'Obrigado ^^', 2, '2017-05-06 21:12:17'),
-(3, 'Que tédio :O', 1, '2017-05-06 21:26:06');
 
 --
 -- Indexes for dumped tables
@@ -135,17 +95,17 @@ ALTER TABLE `twitter`
 -- AUTO_INCREMENT for table `follows`
 --
 ALTER TABLE `follows`
-  MODIFY `idRelacionamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idRelacionamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 --
 -- AUTO_INCREMENT for table `pessoa`
 --
 ALTER TABLE `pessoa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 --
 -- AUTO_INCREMENT for table `twitter`
 --
 ALTER TABLE `twitter`
-  MODIFY `idTwitter` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idTwitter` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- Constraints for dumped tables
 --
