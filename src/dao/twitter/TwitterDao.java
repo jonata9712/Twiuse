@@ -128,7 +128,11 @@ public class TwitterDao extends dao.AbstractDao implements dao.interfaces.ITwitt
 				
 				System.out.println("Tamanho lista Twitter: "+lista.size());
 			}
-			return lista;
+			if(lista.isEmpty()){
+				return null;
+			}else{
+				return lista;
+			}
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -139,7 +143,7 @@ public class TwitterDao extends dao.AbstractDao implements dao.interfaces.ITwitt
 	}
 
 	@Override
-	public List listarTudo() {
+	public List<Twitter> listarTudo() {
 		// TODO Auto-generated method stub
 		ResultSet rs;
 		PreparedStatement stmt = retornaPreparedStatement(
@@ -155,8 +159,12 @@ public class TwitterDao extends dao.AbstractDao implements dao.interfaces.ITwitt
 				lista.add(tw);
 			}
 			rs.close();
-
-			return lista;
+			if(lista.isEmpty()){
+				return null;
+			}else{
+				return lista;
+			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

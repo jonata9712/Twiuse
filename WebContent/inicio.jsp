@@ -81,6 +81,11 @@
 
 				</c:if>
 				<c:choose>
+					<c:when test="${!leituraInicial}">
+						<%
+       					 response.sendRedirect("/Twiuse/inicio");
+  						 %>
+					</c:when>
 					<c:when test="${listatwt == null}">
 						<h1>Poxa, você ainda não segue ninguém :/</h1>
 						<h3>
@@ -92,7 +97,7 @@
 						<c:forEach var="twitter" items="${listatwt}">
 							<div class="panel panel-default">
 								<div class="panel-heading">
-									<h3 class="panel-title">${twitter.pessoa.nome} disse:</h3>
+									<h3 class="panel-title">${twitter.pessoa.nome}disse:</h3>
 								</div>
 								<div class="panel-body">${twitter.mensagem}</div>
 							</div>
@@ -110,8 +115,8 @@
 							end="9" step="1">
 							<tr>
 								<td>
-									<form class="navbar-form"
-										action="/Twiuse/SeguirServlet" method="post">
+									<form class="navbar-form" action="/Twiuse/SeguirServlet"
+										method="post">
 										<div class="form-group"></div>
 										<input type="hidden" name="idPessoa" value="${pessoa.id}">
 										<a href="/Twiuse/VisitarServlet?pessoa=${pessoa.usuario}">${pessoa.nome}</a>

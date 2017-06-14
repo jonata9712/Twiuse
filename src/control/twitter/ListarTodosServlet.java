@@ -40,6 +40,7 @@ public class ListarTodosServlet extends HttpServlet {
 		TwitterDao tdao = new TwitterDao((Connection) request.getAttribute("conexao"));
 		PessoaDao pdao = new PessoaDao((Connection) request.getAttribute("conexao"));
 		Pessoa p = (Pessoa) session.getAttribute("usuario");
+		boolean leituraInicial = true;
 		if(p == null){
 			session.setAttribute("listatwt", tdao.listarTudo());
 		}else{
@@ -47,6 +48,7 @@ public class ListarTodosServlet extends HttpServlet {
 			session.setAttribute("listaTodasPessoas", todasPessoas);
 			session.setAttribute("listatwt", tdao.listarTwitterSeguindo(p.getId()));
 		}
+		session.setAttribute("leituraInicial", leituraInicial);
 		RequestDispatcher rd = request.getRequestDispatcher("/inicio.jsp");
 		rd.forward(request, response);
 	}
