@@ -15,7 +15,7 @@ public class ConnectionFactory {
 	public static Connection getConnection() {
         try {
             return DriverManager.getConnection(
-          "jdbc:mysql://localhost/twitter", "root", "");
+          "jdbc:mysql://sql3.freesqldatabase.com/sql3212075", "sql3212075", "XaarNXdZjG");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

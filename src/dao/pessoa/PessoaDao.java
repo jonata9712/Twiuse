@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import dao.twitter.TwitterDao;
 import model.Pessoa;
 
 public class PessoaDao extends dao.AbstractDao implements dao.interfaces.IPessoaDao {

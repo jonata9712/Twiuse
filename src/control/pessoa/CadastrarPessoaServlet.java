@@ -53,12 +53,14 @@ public class CadastrarPessoaServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		System.out.println("cadastrando pessoa");
 		String nome = request.getParameter("nome");
 		String usuario = request.getParameter("usuario");				
 		String senha = request.getParameter("senha");
 		
 		PessoaDao dao = new PessoaDao((Connection) request.getAttribute("conexao"));
 		if (!dao.verificaExisteNomeUsuario(usuario).isEmpty()) {
+			System.out.println("verificando usuário existente");
 			PrintWriter out = response.getWriter();
 			out.println("<html>");
 			out.println("<body>");
@@ -67,11 +69,13 @@ public class CadastrarPessoaServlet extends HttpServlet {
 			out.println("</h1>");
 			out.println("</body>");
 			out.println("</html>");
+			System.out.println("passou no teste de usuário");
 		} else {
 			try {
 				dao.incluirPessoa(nome, usuario,
 						senha);
 				RequestDispatcher rd = request.getRequestDispatcher("/LoginServlet?usuario="+usuario+"&senha="+senha);
+				System.out.println("Pessoa inclusa");
 				rd.forward(request, response);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
