@@ -1,17 +1,20 @@
+body{
+	background-color: #82ABB2;
+}
 #barra-topo{
 	position: fixed;
-	top: 0;
-	left: 0;
-	z-index:1 ;
+	z-index:1;
 }
 #sobre{
 	position: fixed;
 	top: 100px;
+	
 }
 
 #seguir{
 	position: fixed;
 	top: 100px;
+	right: 0;
 }
 
 #escrever{
@@ -19,10 +22,17 @@
 	top: 200px;
 	left: 15px;
 	z-index:1 ;
+	margin-top: 30px;
 }
 #painel{
 }
 
 .centro{
 	padding-top: 100px;
+	text-align: center;
+	overflow: auto;
+}
+
+.publicacoes{
+	margin-bottom: 10px;
 }

@@ -9,45 +9,52 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Twitter</title>
-<link rel="stylesheet" href="css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
 <link rel="stylesheet" href="css/style.css" />
 
 
 
 </head>
 <body>
-	<nav class="navbar navbar-dark col-lg-12" id="barra-topo">
-		<div>
-			<ul class="nav navbar-nav navbar-left">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark col-lg-12"
+		id="barra-topo">
 
-				<li><a href="/Twiuse/inicio">Início</a></li>
-				<c:if test="${usuario == null}">
-					<li><a href="/Twiuse/cadastrar.jsp">Cadastre-se</a></li>
-				</c:if>
-				<c:if test="${usuario != null}">
-					<li><a href="/Twiuse/SairServlet">Sair</a></li>
-				</c:if>
+		<ul class="navbar-nav mr-auto">
 
-
-			</ul>
-
+			<li class="nav-item"><a href="/Twiuse/inicio" class="nav-link">Início</a></li>
 			<c:if test="${usuario == null}">
-				<form class="navbar-form navbar-right" action="/Twiuse/LoginServlet"
-					method="post">
-					Entrar
-					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Usuario"
-							name="usuario" v> <input type="password"
-							class="form-control" placeholder="Senha" name="senha">
-					</div>
-					<button type="submit" class="btn btn-default">Login</button>
-				</form>
+				<li class="nav-item"><a href="/Twiuse/cadastrar.jsp"
+					class="nav-link">Cadastre-se</a></li>
 			</c:if>
-		</div>
+			<c:if test="${usuario != null}">
+				<li class="nav-item"><a href="/Twiuse/SairServlet"
+					class="nav-link">Sair</a></li>
+			</c:if>
+
+
+		</ul>
+		<c:if test="${usuario == null}">
+			<form class="form-inline" action="/Twiuse/LoginServlet" method="post">
+				<div class="form-group">
+					<input type="text" class="form-control mr-sm-2"
+						placeholder="Usuario" name="usuario" v> <input
+						type="password" class="form-control" placeholder="Senha"
+						name="senha">
+				</div>
+				<button type="submit" class="btn btn-primary">Login</button>
+			</form>
+		</c:if>
 
 	</nav>
+
+
+
 	<c:if test="${usuario != null}">
-		<div class="panel panel-default col-md-3" id="escrever">
+		<div class="card col-md-3 border-info mb-3 bg-dark text-white"
+			id="escrever">
 			<form action="/Twiuse/Twittar" method="post">
 				<div class="form-group">
 					<label for="comment">Escrever:</label>
@@ -61,45 +68,61 @@
 	</c:if>
 	<div class="container">
 
-		<div class="col-md-6 col-md-push-3 centro">
-			<!-- meio -->
 
-			<c:choose>
-				<c:when test="${!leituraInicial}">
-					<%
-						response.sendRedirect("/Twiuse/inicio");
-					%>
-				</c:when>
-				<c:when test="${listatwt == null}">
+		<div class="row justify-content-center">
+			<div class="col-md-6 centro">
+				<!-- meio -->
 
-					<c:if test="${usuario != null}">
-						<h2>Poxa, você ainda não segue ninguém :/</h2>
-						<h3>
-							Aproveita e dá uma olhadinha aqui do lado <span
-								class="glyphicon glyphicon-hand-right" aria-hidden="true"></span>
-						</h3>
-					</c:if>
+				<c:choose>
+					<c:when test="${!leituraInicial}">
+						<%
+							response.sendRedirect("/Twiuse/inicio");
+						%>
+					</c:when>
+					<c:when test="${listatwt == null}">
 
-				</c:when>
-				<c:otherwise>
-					<c:forEach var="twitter" items="${listatwt}">
-						<div class="panel panel-default" id="painel">
-							<div class="panel-heading">
-								<h3 class="panel-title">${twitter.pessoa.nome}disse:</h3>
+						<c:if test="${usuario != null}">
+							<h2>Poxa, você ainda não segue ninguém :/</h2>
+							<h3>
+								Aproveita e dá uma olhadinha aqui do lado <span
+									class="glyphicon glyphicon-hand-right" aria-hidden="true"></span>
+							</h3>
+						</c:if>
+
+					</c:when>
+					<c:otherwise>
+						<c:forEach var="twitter" items="${listatwt}">
+							<div
+								class="card text-white bg-primary mb-3 border-warning publicacoes">
+
+								<div class="card-body">
+									<h5 class="card-title" style="text-align: left">${twitter.pessoa.nome}
+										Disse:</h5>
+								</div>
+								<p class="card-text">${twitter.mensagem}</p>
 							</div>
-							<div class="panel-body">${twitter.mensagem}</div>
-						</div>
-					</c:forEach>
-				</c:otherwise>
-			</c:choose>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
 
 
+			</div>
 		</div>
-		<aside class="col-md-3 col-md-push-5">
-			<!-- SEGUIR PESSOAS -->
-			<c:if test="${usuario != null}">
-				<div class="panel panel-default" id="seguir">
-					<div class="panel-body">
+
+
+
+
+
+
+	</div>
+	<c:if test="${usuario != null}">
+	<c:if test="${not empty listaTodasPessoas}">
+		<div class="row justify-content-end">
+			<aside class="col-md-3">
+				<!-- SEGUIR PESSOAS -->
+
+				<div class="card bg-dark text-white" id="seguir">
+					<div class="card-body">
 						<table>
 
 							<c:forEach var="pessoa" items="${listaTodasPessoas}" begin="0"
@@ -110,7 +133,8 @@
 											method="post">
 											<div class="form-group"></div>
 											<input type="hidden" name="idPessoa" value="${pessoa.id}">
-											<a href="/Twiuse/VisitarServlet?pessoa=${pessoa.usuario}">${pessoa.nome}</a>
+											<a href="/Twiuse/VisitarServlet?pessoa=${pessoa.usuario}"
+												class="text-white">${pessoa.nome}</a>
 											<button type="submit" class="btn btn-default">Seguir</button>
 										</form>
 
@@ -120,21 +144,23 @@
 						</table>
 					</div>
 				</div>
-			</c:if>
 
-		</aside>
-		<nav class="col-md-3 col-md-pull-9" id="sobre">
-			<!-- Lado esquerdo -->
-			<c:if test="${usuario != null}">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title">Sobre você</h3>
-					</div>
-					<div class="panel-body">${usuario.nome}</div>
+
+			</aside>
+		</div>
+		</c:if>
+	</c:if>
+	<nav class="col-md-3" id="sobre">
+		<!-- Lado esquerdo -->
+		<c:if test="${usuario != null}">
+			<div class="card border-info mb-3 bg-dark text-white">
+				<div class="card-heading">
+					<h3 class="card-title">Sobre você</h3>
 				</div>
-			</c:if>
-		</nav>
-	</div>
+				<div class="card-body">${usuario.nome}</div>
+			</div>
+		</c:if>
+	</nav>
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

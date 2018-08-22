@@ -220,7 +220,10 @@ public class PessoaDao extends dao.AbstractDao implements dao.interfaces.IPessoa
 			while(rs.next()){
 				pessoa = new Pessoa(rs.getString("usuario"), rs.getString("nome"));
 				pessoa.setId(rs.getInt("id"));
-				lista.add(pessoa);
+				if (!verificaSeguindo(rs.getInt("id"), idPessoa)) {
+					lista.add(pessoa);
+				}
+				
 			}
 			rs.close();
 			return lista;
