@@ -5,60 +5,66 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Twitter</title>
 <link rel="stylesheet" href="css/bootstrap.min.css" />
 <link rel="stylesheet" href="css/style.css" />
+
+
+<!-- <link rel="stylesheet" href="css/bootstrap.min.css" />  -->
+
 </head>
 <body>
-	<nav class="navbar navbar-default col-lg-12" id="barra-topo">
-		<div class="container">
-			<div>
-				<ul class="nav navbar-nav navbar-left">
+	<nav class="navbar navbar-dark col-lg-12" id="barra-topo">
+		<div>
+			<ul class="nav navbar-nav navbar-left">
 
-					<li><a href="/Twiuse/inicio">Início</a></li>
-					<c:if test="${usuario == null}">
-						<li><a href="/Twiuse/cadastrar.jsp">Cadastre-se</a></li>
-					</c:if>
-					<c:if test="${usuario != null}">
-						<li><a href="/Twiuse/SairServlet">Sair</a></li>
-					</c:if>
-
-
-				</ul>
-
+				<li><a href="/Twiuse/inicio">Início</a></li>
 				<c:if test="${usuario == null}">
-					<form class="navbar-form navbar-right"
-						action="/Twiuse/LoginServlet" method="post">
-						Entrar
-						<div class="form-group">
-							<input type="text" class="form-control" placeholder="Usuario"
-								name="usuario" v> <input type="password"
-								class="form-control" placeholder="Senha" name="senha">
-						</div>
-						<button type="submit" class="btn btn-default">Login</button>
-					</form>
+					<li><a href="/Twiuse/cadastrar.jsp">Cadastre-se</a></li>
 				</c:if>
-			</div>
+				<c:if test="${usuario != null}">
+					<li><a href="/Twiuse/SairServlet">Sair</a></li>
+				</c:if>
+
+
+			</ul>
+
+			<c:if test="${usuario == null}">
+				<form class="navbar-form navbar-right" action="/Twiuse/LoginServlet"
+					method="post">
+					Entrar
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Usuario"
+							name="usuario" v> <input type="password"
+							class="form-control" placeholder="Senha" name="senha">
+					</div>
+					<button type="submit" class="btn btn-default">Login</button>
+				</form>
+			</c:if>
 		</div>
+
 	</nav>
+	<c:if test="${usuario != null}">
+		<div class="panel panel-default col-md-3" id="escrever">
+			<form action="/Twiuse/Twittar" method="post">
+				<div class="form-group">
+					<label for="comment">Escrever:</label>
+					<textarea class="form-control" rows="5" id="comment"
+						name="mensagem"></textarea>
+				</div>
+				<button type="submit" class="btn btn-default">Twittar</button>
+			</form>
+		</div>
+
+	</c:if>
 	<div class="container">
 
 		<div class="col-md-6 col-md-push-3 centro">
 			<!-- meio -->
-			<c:if test="${usuario != null}">
-				<div class="panel panel-default col-md-5" id="escrever">
-					<form action="/Twiuse/Twittar" method="post">
-						<div class="form-group">
-							<label for="comment">Escrever:</label>
-							<textarea class="form-control" rows="5" id="comment"
-								name="mensagem"></textarea>
-						</div>
-						<button type="submit" class="btn btn-default">Twittar</button>
-					</form>
-				</div>
 
-			</c:if>
 			<c:choose>
 				<c:when test="${!leituraInicial}">
 					<%
@@ -130,5 +136,14 @@
 			</c:if>
 		</nav>
 	</div>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+		integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+		crossorigin="anonymous"></script>
+
 </body>
 </html>
