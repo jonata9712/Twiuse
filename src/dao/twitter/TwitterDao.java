@@ -1,17 +1,19 @@
 package dao.twitter;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import dao.pessoa.PessoaDao;
 import model.Pessoa;
 import model.Twitter;
 
-public class TwitterDao extends dao.AbstractDao implements dao.interfaces.ITwitterDao {
+public class TwitterDao extends dao.AbstractDao implements dao.interfaces.ITwitterDao{
 
 	public TwitterDao(Connection conn) {
 		super(conn);
@@ -82,6 +84,7 @@ public class TwitterDao extends dao.AbstractDao implements dao.interfaces.ITwitt
 			stmt.setInt(1, idPessoa);
 			rs = stmt.executeQuery();
 			PessoaDao pdao = new PessoaDao(super.conn);
+			
 			while (rs.next()) {
 				Twitter tw = new Twitter(rs.getInt("idPessoa"), rs.getString("mensagem"), rs.getDate("dataTwitter"),
 						rs.getInt("idTwitter"));
@@ -109,13 +112,25 @@ public class TwitterDao extends dao.AbstractDao implements dao.interfaces.ITwitt
 		System.out.println("Tamanho lista pessoas: "+pessoas.size());
 		try {
 			if(!pessoas.isEmpty()){
+				String sql = "select * from twitter where idPessoa = ";
 				
-				for (Pessoa pessoa : pessoas) {
-					PreparedStatement stmt = retornaPreparedStatement("select * from twitter where idPessoa = ?");
 					
-					stmt.setInt(1, pessoa.getId());
+					
+					for (Pessoa pessoa : pessoas) {
+						if (pessoas.indexOf(pessoa)==0) {
+							sql += Integer.toString(pessoa.getId());
+						}else {
+							sql += " or idPessoa = "+Integer.toString(pessoa.getId());
+						}
+					}
+					sql += " order by dataTwitter desc";
+					System.out.println(sql);
+					
+					
+					
+					PreparedStatement stmt = retornaPreparedStatement(sql);
 					ResultSet rs = stmt.executeQuery();
-					System.out.println("nome: " + pessoa.getNome());
+					
 					while (rs.next()) {
 						Twitter tw = new Twitter(rs.getInt("idPessoa"), rs.getString("mensagem"), rs.getDate("dataTwitter"),
 								rs.getInt("idTwitter"));
@@ -124,7 +139,6 @@ public class TwitterDao extends dao.AbstractDao implements dao.interfaces.ITwitt
 //						System.out.println("mensagem: " + tw.getMensagem());
 					}
 					rs.close();
-				}
 				
 				System.out.println("Tamanho lista Twitter: "+lista.size());
 			}

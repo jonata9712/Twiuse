@@ -96,10 +96,12 @@
 								class="card text-white bg-primary mb-3 border-warning publicacoes">
 
 								<div class="card-body">
-									<h5 class="card-title" style="text-align: left">${twitter.pessoa.nome}
+									<h5 class="card-title text-left">${twitter.pessoa.nome}
 										Disse:</h5>
+										
 								</div>
-								<p class="card-text">${twitter.mensagem}</p>
+								<p class="card-text text-center">${twitter.mensagem}</p>
+								 <h6 class="card-subtitle mb-2 text-white font-italic text-left" style="padding-left: 5px;">Data: ${twitter.dataTwitter}</h6>
 							</div>
 						</c:forEach>
 					</c:otherwise>
@@ -144,6 +146,7 @@
 						</table>
 					</div>
 				</div>
+				<!-- SEGUIR PESSOAS END -->
 
 
 			</aside>
