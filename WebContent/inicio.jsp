@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="ISO-8859-1"%>
+	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="dao.twitter.TwitterDao"%>
 <!DOCTYPE html>
@@ -14,6 +14,8 @@
 	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
 	crossorigin="anonymous">
 <link rel="stylesheet" href="css/style.css" />
+<script type="js/jquery-3.3.1.min.js"></script>
+
 
 
 
@@ -24,7 +26,7 @@
 
 		<ul class="navbar-nav mr-auto">
 
-			<li class="nav-item"><a href="/Twiuse/inicio" class="nav-link">Início</a></li>
+			<li class="nav-item"><a href="/Twiuse/inicio" class="nav-link">InÃ­cio</a></li>
 			<c:if test="${usuario == null}">
 				<li class="nav-item"><a href="/Twiuse/cadastrar.jsp"
 					class="nav-link">Cadastre-se</a></li>
@@ -82,9 +84,9 @@
 					<c:when test="${listatwt == null}">
 
 						<c:if test="${usuario != null}">
-							<h2>Poxa, você ainda não segue ninguém :/</h2>
+							<h2>Poxa, vocÃª ainda nÃ£o segue ninguÃ©m :/</h2>
 							<h3>
-								Aproveita e dá uma olhadinha aqui do lado <span
+								Aproveita e dÃ¡ uma olhadinha aqui do lado <span
 									class="glyphicon glyphicon-hand-right" aria-hidden="true"></span>
 							</h3>
 						</c:if>
@@ -98,10 +100,11 @@
 								<div class="card-body">
 									<h5 class="card-title text-left">${twitter.pessoa.nome}
 										Disse:</h5>
-										
+
 								</div>
 								<p class="card-text text-center">${twitter.mensagem}</p>
-								 <h6 class="card-subtitle mb-2 text-white font-italic text-left" style="padding-left: 5px;">Data: ${twitter.dataTwitter}</h6>
+								<h6 class="card-subtitle mb-2 text-white font-italic text-left"
+									style="padding-left: 5px;">Data: ${twitter.dataTwitter}</h6>
 							</div>
 						</c:forEach>
 					</c:otherwise>
@@ -118,39 +121,36 @@
 
 	</div>
 	<c:if test="${usuario != null}">
-	<c:if test="${not empty listaTodasPessoas}">
-		<div class="row justify-content-end">
-			<aside class="col-md-3">
+		<c:if test="${not empty listaTodasPessoas}">
+			<div class="row justify-content-end">
 				<!-- SEGUIR PESSOAS -->
+				<aside class="col-md-3">
+					<div class="card bg-dark text-white" id="seguir">
+						<div class="card-body">
+							<table>
 
-				<div class="card bg-dark text-white" id="seguir">
-					<div class="card-body">
-						<table>
+								<c:forEach var="pessoa" items="${listaTodasPessoas}" begin="0"
+									end="9" step="1">
+									<tr>
+										<td>
+											<form class="navbar-form" action="/Twiuse/SeguirServlet"
+												method="post">
+												<div class="form-group"></div>
+												<input type="hidden" name="idPessoa" value="${pessoa.id}">
+												<a href="/Twiuse/VisitarServlet?pessoa=${pessoa.usuario}"
+													class="text-white">${pessoa.nome}</a>
+												<button type="submit" class="btn btn-default">Seguir</button>
+											</form>
 
-							<c:forEach var="pessoa" items="${listaTodasPessoas}" begin="0"
-								end="9" step="1">
-								<tr>
-									<td>
-										<form class="navbar-form" action="/Twiuse/SeguirServlet"
-											method="post">
-											<div class="form-group"></div>
-											<input type="hidden" name="idPessoa" value="${pessoa.id}">
-											<a href="/Twiuse/VisitarServlet?pessoa=${pessoa.usuario}"
-												class="text-white">${pessoa.nome}</a>
-											<button type="submit" class="btn btn-default">Seguir</button>
-										</form>
-
-									</td>
-								</tr>
-							</c:forEach>
-						</table>
+										</td>
+									</tr>
+								</c:forEach>
+							</table>
+						</div>
 					</div>
-				</div>
+				</aside>
 				<!-- SEGUIR PESSOAS END -->
-
-
-			</aside>
-		</div>
+			</div>
 		</c:if>
 	</c:if>
 	<nav class="col-md-3" id="sobre">
@@ -158,7 +158,7 @@
 		<c:if test="${usuario != null}">
 			<div class="card border-info mb-3 bg-dark text-white">
 				<div class="card-heading">
-					<h3 class="card-title">Sobre você</h3>
+					<h3 class="card-title">Sobre vocÃª</h3>
 				</div>
 				<div class="card-body">${usuario.nome}</div>
 			</div>
