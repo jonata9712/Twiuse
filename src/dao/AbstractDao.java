@@ -25,6 +25,7 @@ public class AbstractDao {
 			return stmt;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			System.out.println("Prepared Statement falhou: "+sql);
 			e.printStackTrace();
 		}
 		return null;

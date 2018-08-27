@@ -1,5 +1,6 @@
 package control.pessoa;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -61,7 +62,6 @@ public class LoginServlet extends HttpServlet {
 				Pessoa p = dao.loginUsuario(request.getParameter("usuario"), request.getParameter("senha"));
 				if (p != null
 						&& session.getAttribute("usuario") == null) {
-
 					session.setAttribute("usuario", p);
 					RequestDispatcher rd = request.getRequestDispatcher("/inicio");
 					rd.forward(request, response);

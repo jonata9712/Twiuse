@@ -30,22 +30,24 @@
 			    				<div class="col-xs-6 col-sm-6 col-md-6">
 			    					<div class="form-group">
 										<input type="text" name="nome" id="first_name"
-											class="form-control input-sm" placeholder="Nome">
+											class="form-control input-sm" placeholder="Nome" required>
 									</div>
 			    				</div>
 			    			</div>
 
 			    			<div class="form-group">
-			    				<input type="text" name="usuario" id="first_name" class="form-control input-sm" placeholder="Usuário">
+			    				<input type="text" name="usuario" id="first_name" class="form-control input-sm" placeholder="Usuário" required>
 			    			</div>
 
 			    			<div class="row">
 			    				<div class="col-xs-6 col-sm-6 col-md-6">
 			    					<div class="form-group">
-			    						<input type="password" name="senha" id="password" class="form-control input-sm" placeholder="Senha">
+			    						<input type="password" name="senha" id="password" class="form-control input-sm" placeholder="Senha" required>
 			    					</div>
 			    				</div>
 			    			</div>
+			    			
+			    		
 			    			
 			    			<input type="submit" value="Register" class="btn btn-info btn-block">
 			    		
