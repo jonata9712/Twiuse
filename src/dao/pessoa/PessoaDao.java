@@ -219,9 +219,10 @@ public class PessoaDao extends dao.AbstractDao implements dao.interfaces.IPessoa
 	@Override
 	public List<Pessoa> listarTodasQuemSeguir(int idPessoa) {
 		// TODO Auto-generated method stub
-		PreparedStatement stmt = retornaPreparedStatement("select * from pessoa where id <> ?");
+		PreparedStatement stmt = retornaPreparedStatement("select * from pessoa p where p.id in (select idSeguidor from follows where idSeguidor <> ? and idPessoa <> ?)");
 		try {
 			stmt.setInt(1, idPessoa);
+			stmt.setInt(2, idPessoa);
 			ResultSet rs = stmt.executeQuery();
 			Pessoa pessoa;
 			List<Pessoa> lista = new ArrayList<Pessoa>();

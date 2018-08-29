@@ -17,30 +17,23 @@
 <script type="js/jquery-3.3.1.min.js"></script>
 </head>
 <body>
-	<jsp:include page="barra_topo.jsp" />
-	<div class="row centro col-md-12">
-		<jsp:include page="sobre_quem.jsp" />
+	<!-- ESCREVER -->
+	<c:if test="${usuario != null}">
+		<div class="card bg-dark text-white">
+			<form action="/Twiuse/Twittar" method="post">
+				<div class="form-group">
+					<label for="comment">Escrever:</label>
+
+					<textarea class="form-control-md form-control" rows="5"
+						id="comment" name="mensagem"></textarea>
 
 
-		<c:choose>
-			<c:when test="${listatwt == null}">
-				<div class="col-md-6 publicacoes">
-					<h1>${pessoa.nome} Ainda não publicou nada :/</h1>
 				</div>
-			</c:when>
-			<c:otherwise>
-				<jsp:include page="publicacoes.jsp" />
-			</c:otherwise>
-		</c:choose>
-
-		<div class="col-md-3">
-			<jsp:include page="seguir_pessoas.jsp" />
+				<button type="submit" class="btn btn-primary">Twittar</button>
+			</form>
 		</div>
 
-
-
-	</div>
-	<footer class="row"> </footer>
-	</div>
+	</c:if>
+	<!-- ESCREVER -->
 </body>
 </html>

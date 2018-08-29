@@ -36,9 +36,11 @@ public class DeixarSeguirServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		PessoaDao pdao = new PessoaDao((Connection) request.getAttribute("conexao"));
 		HttpSession session = request.getSession();
-		Pessoa p = (Pessoa)session.getAttribute("usuario");
-		pdao.deixarDeSeguir(Integer.parseInt(request.getParameter("idPessoa")), p.getId());
-		RequestDispatcher rd = request.getRequestDispatcher("/VisitarServlet");
+		int idPessoa = Integer.parseInt(request.getParameter("idPessoa"));
+		Pessoa usuarioAtivo = (Pessoa)session.getAttribute("usuario");
+		pdao.deixarDeSeguir(idPessoa, usuarioAtivo.getId());
+		Pessoa p2 = pdao.retornaPessoaById(Integer.parseInt(request.getParameter("idPessoa")));
+		RequestDispatcher rd = request.getRequestDispatcher("/VisitarServlet?pessoa="+p2.getUsuario());
 		rd.forward(request, response);
 	}
 

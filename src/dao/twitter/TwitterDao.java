@@ -13,7 +13,7 @@ import dao.pessoa.PessoaDao;
 import model.Pessoa;
 import model.Twitter;
 
-public class TwitterDao extends dao.AbstractDao implements dao.interfaces.ITwitterDao{
+public class TwitterDao extends dao.AbstractDao implements dao.interfaces.ITwitterDao {
 
 	public TwitterDao(Connection conn) {
 		super(conn);
@@ -84,17 +84,23 @@ public class TwitterDao extends dao.AbstractDao implements dao.interfaces.ITwitt
 			stmt.setInt(1, idPessoa);
 			rs = stmt.executeQuery();
 			PessoaDao pdao = new PessoaDao(super.conn);
-			
+
 			while (rs.next()) {
 				Twitter tw = new Twitter(rs.getInt("idPessoa"), rs.getString("mensagem"), rs.getDate("dataTwitter"),
 						rs.getInt("idTwitter"));
 				tw.setPessoa(pdao.retornaPessoaById(idPessoa));
 				lista.add(tw);
 			}
-			if (!lista.isEmpty()) {
-				return lista;
-			}
 			rs.close();
+			if (!lista.isEmpty()) {
+
+				return lista;
+
+			} else {
+				return null;
+
+			}
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -109,45 +115,41 @@ public class TwitterDao extends dao.AbstractDao implements dao.interfaces.ITwitt
 		List<Pessoa> pessoas = new ArrayList<Pessoa>();
 		List<Twitter> lista = new ArrayList<Twitter>();
 		pessoas = pdao.retornaSeguindo(idPessoa);
-		System.out.println("Tamanho lista pessoas: "+pessoas.size());
+		System.out.println("Tamanho lista pessoas: " + pessoas.size());
 		try {
-			if(!pessoas.isEmpty()){
+			if (!pessoas.isEmpty()) {
 				String sql = "select * from twitter where idPessoa = ";
-				
-					
-					
-					for (Pessoa pessoa : pessoas) {
-						if (pessoas.indexOf(pessoa)==0) {
-							sql += Integer.toString(pessoa.getId());
-						}else {
-							sql += " or idPessoa = "+Integer.toString(pessoa.getId());
-						}
+
+				for (Pessoa pessoa : pessoas) {
+					if (pessoas.indexOf(pessoa) == 0) {
+						sql += Integer.toString(pessoa.getId());
+					} else {
+						sql += " or idPessoa = " + Integer.toString(pessoa.getId());
 					}
-					sql += " order by dataTwitter desc";
-					System.out.println(sql);
-					
-					
-					
-					PreparedStatement stmt = retornaPreparedStatement(sql);
-					ResultSet rs = stmt.executeQuery();
-					
-					while (rs.next()) {
-						Twitter tw = new Twitter(rs.getInt("idPessoa"), rs.getString("mensagem"), rs.getDate("dataTwitter"),
-								rs.getInt("idTwitter"));
-						tw.setPessoa(pdao.retornaPessoaById(tw.getIdPessoa()));
-						lista.add(tw);
+				}
+				sql += " order by dataTwitter desc";
+				System.out.println(sql);
+
+				PreparedStatement stmt = retornaPreparedStatement(sql);
+				ResultSet rs = stmt.executeQuery();
+
+				while (rs.next()) {
+					Twitter tw = new Twitter(rs.getInt("idPessoa"), rs.getString("mensagem"), rs.getDate("dataTwitter"),
+							rs.getInt("idTwitter"));
+					tw.setPessoa(pdao.retornaPessoaById(tw.getIdPessoa()));
+					lista.add(tw);
 //						System.out.println("mensagem: " + tw.getMensagem());
-					}
-					rs.close();
-				
-				System.out.println("Tamanho lista Twitter: "+lista.size());
+				}
+				rs.close();
+
+				System.out.println("Tamanho lista Twitter: " + lista.size());
 			}
-			if(lista.isEmpty()){
+			if (lista.isEmpty()) {
 				return null;
-			}else{
+			} else {
 				return lista;
 			}
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -173,12 +175,12 @@ public class TwitterDao extends dao.AbstractDao implements dao.interfaces.ITwitt
 				lista.add(tw);
 			}
 			rs.close();
-			if(lista.isEmpty()){
+			if (lista.isEmpty()) {
 				return null;
-			}else{
+			} else {
 				return lista;
 			}
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

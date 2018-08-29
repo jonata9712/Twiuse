@@ -45,6 +45,8 @@ public class VisitarServlet extends HttpServlet {
 		List<Twitter> listatwt = tdao.listarTwitterPessoa(p.getId());
 		session.setAttribute("pessoa", p);
 		session.setAttribute("listatwt", listatwt);
+		List<Pessoa> todasPessoas = pdao.listarTodasQuemSeguir(usuarioAtivo.getId());
+		session.setAttribute("listaTodasPessoas", todasPessoas);
 		boolean segue = pdao.verificaSeguindo(p.getId(), usuarioAtivo.getId());
 		if(segue){
 			session.setAttribute("botaoDeixarSeguir", segue);
