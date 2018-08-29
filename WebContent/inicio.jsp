@@ -130,7 +130,7 @@
 			</c:choose>
 
 		</div>
-		<!-- SEGUIR PESSOAS -->
+		
 		<div class="col-md-3">
 		<!-- ESCREVER -->
 			<c:if test="${usuario != null}">
@@ -150,20 +150,31 @@
 
 			</c:if>
 			<!-- ESCREVER -->
+			
+			<!-- SEGUIR PESSOAS -->
 			<c:if test="${usuario != null}">
 				<c:if test="${not empty listaTodasPessoas}">
 
-					<div class="card bg-dark text-white">
+					<div class="card bg-dark text-white" id="seguir">
 						<div class="card-body">
+						<div class="card-heading">
+						<h3 class="card-title">Quem seguir: </h3>
+					</div>
 							<table>
 
 								<c:forEach var="pessoa" items="${listaTodasPessoas}" begin="0"
 									end="9" step="1">
 									<tr>
 										<td>
+										
 											<form class="navbar-form" action="/Twiuse/SeguirServlet"
 												method="post">
 												<div class="form-group"></div>
+												
+												<a href="/Twiuse/VisitarServlet?pessoa=${pessoa.usuario}"
+													class="text-white"><img src="/Twiuse/RecuperaFoto?id=${pessoa.id}" class="rounded-circle img-thumbnail foto_publicacoes"/></a>
+												
+												
 												<input type="hidden" name="idPessoa" value="${pessoa.id}">
 												<a href="/Twiuse/VisitarServlet?pessoa=${pessoa.usuario}"
 													class="text-white">${pessoa.nome}</a>
