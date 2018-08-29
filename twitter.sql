@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
+-- version 4.8.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 13-Jun-2017 às 05:03
--- Versão do servidor: 10.1.21-MariaDB
--- PHP Version: 7.1.1
+-- Generation Time: 29-Ago-2018 às 02:23
+-- Versão do servidor: 10.1.34-MariaDB
+-- PHP Version: 5.6.37
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -30,6 +32,18 @@ CREATE TABLE `follows` (
   `idPessoa` int(11) NOT NULL,
   `idSeguidor` int(11) NOT NULL,
   `idRelacionamento` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `fotos_perfil`
+--
+
+CREATE TABLE `fotos_perfil` (
+  `id_foto` int(11) NOT NULL,
+  `id_pessoa` int(11) NOT NULL,
+  `imagem` longblob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -72,6 +86,14 @@ ALTER TABLE `follows`
   ADD KEY `idSeguidor` (`idSeguidor`);
 
 --
+-- Indexes for table `fotos_perfil`
+--
+ALTER TABLE `fotos_perfil`
+  ADD PRIMARY KEY (`id_foto`),
+  ADD UNIQUE KEY `id_foto` (`id_foto`),
+  ADD UNIQUE KEY `id_pessoa` (`id_pessoa`);
+
+--
 -- Indexes for table `pessoa`
 --
 ALTER TABLE `pessoa`
@@ -95,17 +117,26 @@ ALTER TABLE `twitter`
 -- AUTO_INCREMENT for table `follows`
 --
 ALTER TABLE `follows`
-  MODIFY `idRelacionamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `idRelacionamento` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `fotos_perfil`
+--
+ALTER TABLE `fotos_perfil`
+  MODIFY `id_foto` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `pessoa`
 --
 ALTER TABLE `pessoa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `twitter`
 --
 ALTER TABLE `twitter`
-  MODIFY `idTwitter` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `idTwitter` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- Constraints for dumped tables
 --
@@ -118,10 +149,17 @@ ALTER TABLE `follows`
   ADD CONSTRAINT `follows_ibfk_2` FOREIGN KEY (`idSeguidor`) REFERENCES `pessoa` (`id`);
 
 --
+-- Limitadores para a tabela `fotos_perfil`
+--
+ALTER TABLE `fotos_perfil`
+  ADD CONSTRAINT `fotos_perfil_ibfk_1` FOREIGN KEY (`id_pessoa`) REFERENCES `pessoa` (`id`);
+
+--
 -- Limitadores para a tabela `twitter`
 --
 ALTER TABLE `twitter`
   ADD CONSTRAINT `twitter_ibfk_1` FOREIGN KEY (`idPessoa`) REFERENCES `pessoa` (`id`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
