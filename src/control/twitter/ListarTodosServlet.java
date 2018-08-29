@@ -44,8 +44,10 @@ public class ListarTodosServlet extends HttpServlet {
 		if(p == null){
 			session.setAttribute("listatwt", tdao.listarTudo());
 		}else{
+			List<Pessoa> listaSeguidores = pdao.retornaSeguindo(p.getId());
 			List<Pessoa> todasPessoas = pdao.listarTodasQuemSeguir(p.getId());
 			session.setAttribute("listaTodasPessoas", todasPessoas);
+			session.setAttribute("seguidores", listaSeguidores);
 			session.setAttribute("listatwt", tdao.listarTwitterSeguindo(p.getId()));
 		}
 		session.setAttribute("leituraInicial", leituraInicial);

@@ -45,8 +45,12 @@
 						<div class="card text-white bg-primary mb-3 border-warning">
 
 							<div class="card-body">
-								<img src="/Twiuse/RecuperaFoto?id=${twitter.idPessoa}"
-									class="rounded-circle img-thumbnail foto_publicacoes" />
+							
+							<a href="/Twiuse/VisitarServlet?pessoa=${twitter.pessoa.usuario}"
+													class="text-white"><img
+													src="/Twiuse/RecuperaFoto?id=${twitter.idPessoa}"
+													class="rounded-circle img-thumbnail foto_publicacoes" /></a>
+								
 								<h5 class="card-title text-left">${twitter.pessoa.nome}
 									Disse:</h5>
 

@@ -24,7 +24,7 @@
 					<div class="card bg-dark text-white" id="seguir">
 						<div class="card-body">
 							<div class="card-heading">
-								<h3 class="card-title">Quem seguir:</h3>
+								<h3 class="card-title">Sugestões: </h3>
 							</div>
 							<table>
 

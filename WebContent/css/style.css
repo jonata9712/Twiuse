@@ -27,6 +27,11 @@ body{
 	height: 30px;
 }
 
+.foto_quem_voce{
+	height: 50px;
+	width: 50px;
+}
+
 #seguir{
 	margin-top: 10px;
 }

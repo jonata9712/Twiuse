@@ -22,8 +22,11 @@
 
 
 	<div class="row centro col-md-12">
-
+		<div class="col-md-3">
 		<jsp:include page="sobre_voce.jsp" />
+		<jsp:include page="quem_voce_segue.jsp" />
+		</div>
+		
 		<jsp:include page="publicacoes.jsp" />
 
 

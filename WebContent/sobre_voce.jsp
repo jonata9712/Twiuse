@@ -21,7 +21,6 @@
 
 </head>
 <body>
-	<div class="col-md-3">
 		<!-- SOBRE VOCÊ -->
 		<c:if test="${usuario != null}">
 			<div class="card border-info mb-3 bg-dark text-white">
@@ -55,8 +54,6 @@
 
 
 
-
-	</div>
 
 </body>
 </html>

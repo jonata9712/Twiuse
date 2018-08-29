@@ -109,15 +109,19 @@ public class PessoaDao extends dao.AbstractDao implements dao.interfaces.IPessoa
 	@Override
 	public List<Pessoa> retornaSeguindo(int idSeguidor) {
 		List<Pessoa> pessoas = new ArrayList<Pessoa>();
-		PreparedStatement stmt = retornaPreparedStatement("select * from follows where idSeguidor = ?");
+		PreparedStatement stmt = retornaPreparedStatement("select * from follows where idSeguidor = ? and idPessoa <> ?");
 		try {
 			stmt.setInt(1, idSeguidor);
+			stmt.setInt(2, idSeguidor);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				Pessoa p = retornaPessoaById(rs.getInt("idPessoa"));
 				pessoas.add(p);
 			}
-			System.out.println("Tamanho da lista de pessoas: " + pessoas.size());
+			System.out.println("lista de pessoas sendo seguidas: ");
+			for (Pessoa pessoa2 : pessoas) {
+				System.out.println(pessoa2.getNome());
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -128,18 +132,24 @@ public class PessoaDao extends dao.AbstractDao implements dao.interfaces.IPessoa
 
 	@Override
 	public List<Pessoa> retornaSeguidores(int idPessoa) {
-		PreparedStatement stmt = retornaPreparedStatement("select * from follows where idPessoa = ?");
+		PreparedStatement stmt = retornaPreparedStatement("select * from follows where idSeguidor = ? and idPessoa <> ?");
 		ResultSet rs;
 		try {
 			stmt.setInt(1, idPessoa);
+			stmt.setInt(2, idPessoa);
 			rs = stmt.executeQuery();
-			rs.close();
+			
 			Pessoa pessoa;
 			List<Pessoa> lista = new ArrayList<Pessoa>();
 			while (rs.next()) {
-				pessoa = new Pessoa(rs.getString("usuario"), rs.getString("nome"));
+				pessoa = retornaPessoaById(rs.getInt("idPessoa"));
 				lista.add(pessoa);
 			}
+			System.out.println("lista de seguidores: ");
+			for (Pessoa pessoa2 : lista) {
+				System.out.println(pessoa2.getNome());
+			}
+			rs.close();
 			return lista;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
